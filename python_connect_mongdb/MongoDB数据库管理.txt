@@ -1,0 +1,28 @@
+#设置数据目录的路径
+dbpath=D:\MongoDB\data\db
+#设置日志信息的文件路径
+logpath=D:\MongoDB\log\MongoDB.log
+#打开日志输出操作
+logappend=true
+#用户管理
+noauth=true
+#设置端口号
+port=27017
+
+
+noauth=true即表示不启用用户管理，下面为启用用户管理并创建用户
+1、切换到需要管理的数据上
+use transdata#切换到数据库
+2、创建用户
+db.createUser({
+"user":"hello",
+"pwd":"python",
+"roles":[{"role":"readWrite","db":"transdata"}]
+}
+)
+3、修改启动文件
+将启动文件MongoDB.conf中用户管理项该为
+auth=true#此时启动了用户管理
+4、连接数据库
+利用MongoDB-port27017命令可以连接数据库，但会报错；应使用
+mongo localhost:27017/transdata =u hello -p python
